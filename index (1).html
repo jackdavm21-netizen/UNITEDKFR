@@ -1,254 +1,1080 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UKFR - United Kingdom First Response</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        * {
-            font-family: 'DM Sans', sans-serif;
-        }
-        h1, h2, h3, h4 {
-            font-family: 'Fraunces', serif;
-        }
-        body {
-            background: radial-gradient(ellipse at top, #1a1a2e 0%, #0f0f1e 50%, #000000 100%);
-            min-height: 100vh;
-        }
-        .glass-card {
-            background: rgba(15, 15, 30, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(123, 141, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(123, 141, 255, 0.1);
-        }
-        .neon-border {
-            border: 2px solid rgba(123, 141, 255, 0.5);
-            box-shadow: 0 0 20px rgba(123, 141, 255, 0.3), inset 0 0 20px rgba(123, 141, 255, 0.1);
-        }
-        .text-neon {
-            color: #7b8dff;
-            text-shadow: 0 0 10px rgba(123, 141, 255, 0.5);
-        }
-        .text-neon-purple {
-            color: #9f6bff;
-            text-shadow: 0 0 10px rgba(159, 107, 255, 0.5);
-        }
-        .nav-link {
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .nav-link:hover {
-            color: #7b8dff;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #7b8dff, #9f6bff);
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        .hero-text {
-            background: linear-gradient(135deg, #7b8dff 0%, #9f6bff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>UKFR — United Kingdom First Response</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ===========================
+   CORE PALETTE & GLOBAL
+   =========================== */
+:root {
+  --blue-main: #1e4fff;
+  --blue-soft: #7aa2ff;
+  --accent-gold: #f5c76a;
+  --bg-dark: #05070c;
+  --panel-dark: #10131c;
+  --panel-mid: #151926;
+  --text-main: #f2f4f8;
+  --text-muted: #9aa3b5;
+  --border-soft: rgba(126, 150, 200, 0.4);
+  --danger: #e84545;
+  --success: #3ccf7a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #151b2e 0, #05070c 55%);
+  color: var(--text-main);
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* Page fade/slide */
+.page {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.page.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Glow pulse */
+.pulse-glow {
+  animation: pulseGlow 2.8s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(30,79,255,0.3); }
+  50% { box-shadow: 0 0 22px rgba(30,79,255,0.7); }
+  100% { box-shadow: 0 0 10px rgba(30,79,255,0.3); }
+}
+
+/* ===========================
+   HEADER / NAV
+   =========================== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(5, 7, 12, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-soft);
+  padding: 0.9rem 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.4rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue-soft);
+}
+
+.brand-sub {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+}
+
+.navbar {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--blue-main);
+  transition: width 0.25s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: var(--text-main);
+}
+
+/* ===========================
+   LAYOUT WRAPPER
+   =========================== */
+.main-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3.5rem;
+}
+
+/* ===========================
+   HOME / HERO
+   =========================== */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 2.5rem;
+  align-items: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-left h1 {
+  font-size: 2.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin: 0 0 1rem;
+}
+
+.hero-left h1 span {
+  color: var(--blue-soft);
+}
+
+.hero-tagline {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--accent-gold);
+  margin-bottom: 1.2rem;
+}
+
+.hero-text {
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 1.8rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  border-radius: 999px;
+  padding: 0.8rem 1.8rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue-main), var(--blue-soft));
+  color: #fff;
+  box-shadow: 0 0 18px rgba(30, 79, 255, 0.45);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 26px rgba(30, 79, 255, 0.7);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-main);
+  border-color: var(--border-soft);
+}
+
+.btn-ghost:hover {
+  border-color: var(--blue-main);
+  background: rgba(21, 25, 38, 0.9);
+}
+
+.hero-right {
+  background: radial-gradient(circle at top, #27345a 0, #10131c 55%);
+  border-radius: 18px;
+  border: 1px solid var(--border-soft);
+  padding: 1.5rem 1.6rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+}
+
+.hero-right-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+}
+
+.hero-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.hero-stat {
+  background: rgba(5, 7, 12, 0.7);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(126, 150, 200, 0.35);
+}
+
+.hero-stat-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.hero-stat-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.hero-stat-value.accent {
+  color: var(--accent-gold);
+}
+
+.hero-stat-value.good {
+  color: var(--success);
+}
+
+.hero-stat-value.danger {
+  color: var(--danger);
+}
+
+/* ===========================
+   SECTION BLOCKS
+   =========================== */
+.section-title {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+}
+
+.card-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.4rem;
+}
+
+.card {
+  background: var(--panel-dark);
+  border-radius: 14px;
+  border: 1px solid rgba(126, 150, 200, 0.35);
+  padding: 1.3rem 1.4rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blue-soft);
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ===========================
+   PAGE-SPECIFIC STYLES
+   =========================== */
+.page-hero {
+  background: var(--panel-mid);
+  border-radius: 18px;
+  border: 1px solid var(--border-soft);
+  padding: 1.8rem 1.8rem 1.6rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+}
+
+.page-hero-title {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 0.6rem;
+}
+
+.page-hero-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 600px;
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 150, 200, 0.6);
+  color: var(--text-muted);
+}
+
+.badge.gold {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+.badge.blue {
+  border-color: var(--blue-soft);
+  color: var(--blue-soft);
+}
+
+/* Operations */
+.timeline {
+  border-left: 2px solid rgba(126, 150, 200, 0.5);
+  margin-top: 1rem;
+  padding-left: 1.2rem;
+}
+
+.timeline-item {
+  margin-bottom: 1rem;
+}
+
+.timeline-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--blue-soft);
+}
+
+.timeline-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Training */
+.training-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.4rem;
+}
+
+.training-card {
+  background: var(--panel-dark);
+  border-radius: 14px;
+  border: 1px solid rgba(126, 150, 200, 0.35);
+  padding: 1.2rem 1.3rem;
+}
+
+.training-level {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent-gold);
+  margin-bottom: 0.3rem;
+}
+
+/* Join */
+.requirements-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.5rem 0 0;
+}
+
+.requirements-list li {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+/* Support */
+.faq-item {
+  margin-bottom: 1rem;
+}
+
+.faq-q {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.faq-a {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* Rules */
+.rules-list {
+  list-style: decimal;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.rules-list li {
+  margin-bottom: 0.4rem;
+}
+
+/* Staff */
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.staff-card {
+  background: var(--panel-dark);
+  border-radius: 14px;
+  border: 1px solid rgba(126, 150, 200, 0.35);
+  padding: 1.1rem 1.2rem;
+}
+
+.staff-name {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.staff-role {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--blue-soft);
+  margin-bottom: 0.4rem;
+}
+
+.staff-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Applications */
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.4rem;
+}
+
+.app-card {
+  background: var(--panel-dark);
+  border-radius: 14px;
+  border: 1px solid rgba(126, 150, 200, 0.35);
+  padding: 1.2rem 1.3rem;
+}
+
+.app-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blue-soft);
+}
+
+.app-card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0.7rem;
+}
+
+/* ===========================
+   FOOTER
+   =========================== */
+footer {
+  border-top: 1px solid var(--border-soft);
+  background: #05070c;
+  padding: 2.2rem 1.5rem 2.4rem;
+  margin-top: 2rem;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.8rem;
+}
+
+footer h4 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  margin-bottom: 0.7rem;
+}
+
+.footer-link {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+}
+
+.footer-link:hover {
+  color: var(--blue-soft);
+}
+
+.footer-bottom {
+  grid-column: 1 / -1;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 1.2rem;
+  text-align: center;
+}
+
+/* ===========================
+   MUSIC TOGGLE
+   =========================== */
+#musicToggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(30, 79, 255, 0.2);
+  border: 1px solid rgba(30, 79, 255, 0.5);
+  padding: 10px 16px;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: 0.3s;
+  z-index: 999;
+}
+
+#musicToggle:hover {
+  background: rgba(30, 79, 255, 0.35);
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .navbar {
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+}
+</style>
 </head>
-<body class="text-gray-100">
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 glass-card">                                                                                                    
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-2">
-                    <i data-lucide="shield-check" class="text-neon" stroke-width="2.5"></i>
-                    <span class="text-xl font-bold hero-text">UKFR</span>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="nav-link text-neon font-medium">Home</a>
-                    <a href="operations.html" class="nav-link text-gray-300 hover:text-neon">Operations</a>
-                    <a href="rules.html" class="nav-link text-gray-300 hover:text-neon">Rules</a>
-                    <a href="applications.html" class="nav-link text-gray-300 hover:text-neon">Applications</a>
-                    <a href="staff.html" class="nav-link text-gray-300 hover:text-neon">Staff</a>
-                    <a href="support.html" class="nav-link text-gray-300 hover:text-neon">Support</a>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-300">
-                        <i data-lucide="menu"></i>
-                    </button>
-                </div>
-            </div>
+
+<body>
+
+<!-- Background music -->
+<audio id="bgm" src="your-music-file.mp3" loop></audio>
+<div id="musicToggle">MUSIC: OFF</div>
+
+<header>
+  <div class="brand">
+    <span class="brand-title">UKFR</span>
+    <span class="brand-sub">United Kingdom First Response</span>
+  </div>
+  <nav class="navbar">
+    <span class="nav-link active" data-page="home">Home</span>
+    <span class="nav-link" data-page="operations">Operations</span>
+    <span class="nav-link" data-page="training">Training</span>
+    <span class="nav-link" data-page="join">Join</span>
+    <span class="nav-link" data-page="support">Support</span>
+    <span class="nav-link" data-page="rules">Rules</span>
+    <span class="nav-link" data-page="staff">Staff</span>
+    <span class="nav-link" data-page="applications">Applications</span>
+  </nav>
+</header>
+
+<div class="main-wrap">
+
+  <!-- HOME -->
+  <section id="home" class="page active">
+    <div class="hero reveal">
+      <div class="hero-left">
+        <div class="hero-tagline">Elite Tactical Roleplay Environment</div>
+        <h1><span>United Kingdom</span> First Response</h1>
+        <p class="hero-text">
+          A cinematic, high-stakes emergency response experience. Coordinate, deploy, and resolve incidents
+          across the United Kingdom with precision and discipline.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-page="join">Join Our Forces</button>
+          <button class="btn btn-ghost" data-page="operations">View Operations</button>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass-card mt-2 mx-4 rounded-lg">
-            <div class="flex flex-col space-y-2 p-4">
-                <a href="index.html" class="text-neon font-medium py-2">Home</a>
-                <a href="operations.html" class="text-gray-300 hover:text-neon py-2">Operations</a>
-                <a href="rules.html" class="text-gray-300 hover:text-neon py-2">Rules</a>
-                <a href="applications.html" class="text-gray-300 hover:text-neon py-2">Applications</a>
-                <a href="staff.html" class="text-gray-300 hover:text-neon py-2">Staff</a>
-                <a href="support.html" class="text-gray-300 hover:text-neon py-2">Support</a>
-            </div>
+      </div>
+      <div class="hero-right pulse-glow">
+        <div class="hero-right-title">Current Operational Snapshot</div>
+        <div class="hero-stat-grid">
+          <div class="hero-stat reveal">
+            <div class="hero-stat-label">Active Members</div>
+            <div class="hero-stat-value">0</div>
+          </div>
+          <div class="hero-stat reveal">
+            <div class="hero-stat-label">Incidents Resolved</div>
+            <div class="hero-stat-value accent">10K+</div>
+          </div>
+          <div class="hero-stat reveal">
+            <div class="hero-stat-label">Server Status</div>
+            <div class="hero-stat-value good">24/7 Online</div>
+          </div>
+          <div class="hero-stat reveal">
+            <div class="hero-stat-label">Staff Team</div>
+            <div class="hero-stat-value accent">2 (Hiring)</div>
+          </div>
         </div>
-    </nav>
+      </div>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div class="text-center space-y-6">
-            <div class="inline-block glass-card px-4 py-2 rounded-full mb-4">
-                <span class="text-neon text-sm font-semibold tracking-wider">TACTICAL RESPONSE UNIT</span>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-bold hero-text mb-6">
-                United Kingdom<br>First Response
-            </h1>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                Elite tactical operations and emergency response coordination. Protecting communities through advanced training, strategic deployment, and unwavering dedication.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-                <a href="applications.html" class="neon-border px-8 py-3 rounded-lg font-semibold text-neon hover:bg-indigo-900/20 transition-all">
-                    Join Our Forces
-                </a>
-                <a href="operations.html" class="glass-card px-8 py-3 rounded-lg font-semibold text-gray-300 hover:text-neon transition-all">
-                    View Operations
-                </a>
-            </div>
+    <h2 class="section-title reveal">Core Capabilities</h2>
+    <div class="card-grid-3">
+      <div class="card reveal">
+        <h3>24/7 Dispatch</h3>
+        <p>Coordinate live incidents, assign units, and maintain control of the operational picture at all times.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Elite Training</h3>
+        <p>Structured training paths designed to build discipline, communication, and tactical decision-making.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Strategic Zones</h3>
+        <p>Multi-region coverage across the UK with scalable deployment and scenario variety.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPERATIONS -->
+  <section id="operations" class="page">
+    <div class="page-hero reveal">
+      <div class="page-hero-title">Operations Command</div>
+      <div class="page-hero-sub">
+        Monitor live deployments, review mission history, and maintain situational awareness across all UKFR zones.
+      </div>
+      <div class="badge-row">
+        <span class="badge blue">Live Ops</span>
+        <span class="badge">Mission Logs</span>
+        <span class="badge gold">High Priority</span>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">Active Zones</h2>
+    <div class="card-grid-3">
+      <div class="card reveal">
+        <h3>Metropolitan Sector</h3>
+        <p>High-density urban operations with rapid response requirements and complex incident chains.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Rural & Motorway</h3>
+        <p>Long-distance pursuits, remote incidents, and multi-agency coordination across large areas.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Critical Infrastructure</h3>
+        <p>Airports, transport hubs, and key national assets requiring heightened security and precision.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">Recent Mission Log</h2>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-title">Operation Nightline</div>
+        <div class="timeline-meta">High-risk pursuit through metropolitan sector — successful containment, no casualties.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-title">Operation Iron Gate</div>
+        <div class="timeline-meta">Coordinated response to multi-vehicle RTC on motorway — triage and traffic control.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-title">Operation Safe Harbour</div>
+        <div class="timeline-meta">Protective detail for critical infrastructure site during elevated threat level.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINING -->
+  <section id="training" class="page">
+    <div class="page-hero reveal">
+      <div class="page-hero-title">Training & Development</div>
+      <div class="page-hero-sub">
+        Structured modules designed to build competence, confidence, and cohesion under pressure.
+      </div>
+      <div class="badge-row">
+        <span class="badge gold">Progression</span>
+        <span class="badge blue">Scenario-Based</span>
+        <span class="badge">Role-Specific</span>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">Training Modules</h2>
+    <div class="training-grid">
+      <div class="training-card reveal">
+        <div class="training-level">Level I — Foundation</div>
+        <h3>Radio Discipline</h3>
+        <p>Clear, concise, and controlled communications under live operational conditions.</p>
+      </div>
+      <div class="training-card reveal">
+        <div class="training-level">Level II — Intermediate</div>
+        <h3>Incident Command</h3>
+        <p>Managing multiple units, prioritising calls, and maintaining operational oversight.</p>
+      </div>
+      <div class="training-card reveal">
+        <div class="training-level">Level III — Advanced</div>
+        <h3>Critical Incidents</h3>
+        <p>High-risk, time-sensitive scenarios requiring rapid decision-making and coordination.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">Rank Progression</h2>
+    <div class="card-grid-3">
+      <div class="card reveal">
+        <h3>Probationer</h3>
+        <p>New recruits undergoing initial assessment and basic operational familiarisation.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Operator</h3>
+        <p>Fully cleared personnel trusted with independent deployment and incident management.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Command</h3>
+        <p>Senior members overseeing operations, training, and strategic direction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section id="join" class="page">
+    <div class="page-hero reveal">
+      <div class="page-hero-title">Join Our Forces</div>
+      <div class="page-hero-sub">
+        Step into a disciplined, cinematic emergency response environment. We’re looking for committed, mature players
+        ready to operate as part of a professional unit.
+      </div>
+      <div class="badge-row">
+        <span class="badge gold">Recruitment Open</span>
+        <span class="badge blue">16+ Recommended</span>
+        <span class="badge">Microphone Required</span>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">Requirements</h2>
+    <div class="card-grid-3">
+      <div class="card reveal">
+        <h3>Professional Conduct</h3>
+        <ul class="requirements-list">
+          <li>Respectful behaviour at all times.</li>
+          <li>Willingness to follow chain of command.</li>
+          <li>No tolerance for harassment or abuse.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3>Technical Setup</h3>
+        <ul class="requirements-list">
+          <li>Stable internet connection.</li>
+          <li>Working microphone and clear audio.</li>
+          <li>Access to required platforms/servers.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3>Commitment</h3>
+        <ul class="requirements-list">
+          <li>Regular attendance for operations.</li>
+          <li>Willingness to train and improve.</li>
+          <li>Team-first mindset.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">Apply Now</h2>
+    <div class="card reveal">
+      <p>
+        Ready to step into the blue line? Submit an application through the Applications section. A member of the staff
+        team will review your submission and contact you with next steps.
+      </p>
+      <button class="btn btn-primary" data-page="applications">Go to Applications</button>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section id="support" class="page">
+    <div class="page-hero reveal">
+      <div class="page-hero-title">Support & Assistance</div>
+      <div class="page-hero-sub">
+        If you encounter issues, have questions, or need clarification on any aspect of UKFR, this is your first stop.
+      </div>
+      <div class="badge-row">
+        <span class="badge blue">Helpdesk</span>
+        <span class="badge">FAQ</span>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">Frequently Asked Questions</h2>
+    <div class="card reveal">
+      <div class="faq-item">
+        <div class="faq-q">How do I join operations?</div>
+        <div class="faq-a">First, submit an application. Once accepted, you’ll be briefed and assigned to a unit.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if I can’t attend a scheduled operation?</div>
+        <div class="faq-a">Notify a staff member as early as possible so we can adjust deployments.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Where do I report rule breaches?</div>
+        <div class="faq-a">Use the appropriate support or report channels as directed by staff.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section id="rules" class="page">
+    <div class="page-hero reveal">
+      <div class="page-hero-title">Rules & Conduct</div>
+      <div class="page-hero-sub">
+        A disciplined environment depends on clear expectations. These rules exist to protect the experience for everyone.
+      </div>
+      <div class="badge-row">
+        <span class="badge gold">Mandatory</span>
+        <span class="badge">Zero Tolerance</span>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">Core Rules</h2>
+    <div class="card reveal">
+      <ol class="rules-list">
+        <li>Respect all members and staff at all times.</li>
+        <li>Follow the chain of command during operations.</li>
+        <li>No discrimination, harassment, or targeted abuse.</li>
+        <li>Maintain in-character discipline during roleplay scenarios.</li>
+        <li>Do not exploit, cheat, or intentionally disrupt operations.</li>
+        <li>Follow all platform-specific terms of service.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- STAFF -->
+  <section id="staff" class="page">
+    <div class="page-hero reveal">
+      <div class="page-hero-title">Staff Team</div>
+      <div class="page-hero-sub">
+        The individuals responsible for maintaining standards, coordinating operations, and supporting the community.
+      </div>
+      <div class="badge-row">
+        <span class="badge gold">Leadership</span>
+        <span class="badge blue">Operations</span>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">Command & Staff</h2>
+    <div class="staff-grid">
+      <div class="staff-card reveal">
+        <div class="staff-name">Command Lead</div>
+        <div class="staff-role">Operations Command</div>
+        <div class="staff-meta">
+          Oversees strategic direction, high-level operations, and final decision-making.
         </div>
-    </section>
-
-    <!-- Highlight Cards -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Card 1 -->
-            <div class="glass-card rounded-xl p-8 hover:neon-border transition-all group">
-                <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <i data-lucide="radio" class="text-neon" size="28"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-neon-purple mb-3">24/7 Dispatch</h3>
-                <p class="text-gray-400 leading-relaxed">
-                    Round-the-clock emergency response coordination with real-time tactical deployment and incident management systems.
-                </p>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="glass-card rounded-xl p-8 hover:neon-border transition-all group">
-                <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <i data-lucide="users" class="text-neon" size="28"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-neon-purple mb-3">Elite Training</h3>
-                <p class="text-gray-400 leading-relaxed">
-                    Comprehensive training programs designed to prepare operatives for high-stakes scenarios and emergency situations.
-                </p>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="glass-card rounded-xl p-8 hover:neon-border transition-all group">
-                <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <i data-lucide="map-pin" class="text-neon" size="28"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-neon-purple mb-3">Strategic Zones</h3>
-                <p class="text-gray-400 leading-relaxed">
-                    Coordinated multi-sector response coverage across all United Kingdom regions with rapid deployment capabilities.
-                </p>
-            </div>
+      </div>
+      <div class="staff-card reveal">
+        <div class="staff-name">Training Officer</div>
+        <div class="staff-role">Training & Standards</div>
+        <div class="staff-meta">
+          Designs and delivers training modules, ensuring consistent standards across all units.
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- Stats Section -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="glass-card rounded-xl p-12 neon-border">
-            <div class="grid md:grid-cols-4 gap-8 text-center">
-                <div class="space-y-2">
-                    <div class="text-4xl font-bold text-neon">0 :[</div>
-                    <div class="text-gray-400 uppercase tracking-wide text-sm">Active Members</div>
-                </div>
-                <div class="space-y-2">
-                    <div class="text-4xl font-bold text-neon-purple">10K+</div>
-                    <div class="text-gray-400 uppercase tracking-wide text-sm">Incidents Resolved</div>
-                </div>
-                <div class="space-y-2">
-                    <div class="text-4xl font-bold text-neon">24/7</div>
-                    <div class="text-gray-400 uppercase tracking-wide text-sm">Active Server</div>
-                </div>
-                <div class="space-y-2">
-                    <div class="text-4xl font-bold text-neon-purple">2</div>
-                    <div class="text-gray-400 uppercase tracking-wide text-sm">Staff [Hiring]</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <h2 class="section-title reveal">Recruitment Status</h2>
+    <div class="card reveal">
+      <p>
+        UKFR is currently <strong>hiring additional staff</strong> to support operations and training. If you have
+        experience in leadership, training, or community management, consider applying through the Applications section.
+      </p>
+      <button class="btn btn-ghost" data-page="applications">View Staff Applications</button>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="glass-card mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div class="space-y-4">
-                    <div class="flex items-center space-x-2">
-                        <i data-lucide="shield-check" class="text-neon"></i>
-                        <span class="text-lg font-bold hero-text">UKFR</span>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        UKFR — Step Into the Blue Line.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-neon mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="index.html" class="text-gray-400 hover:text-neon transition-colors">Home</a></li>
-                        <li><a href="operations.html" class="text-gray-400 hover:text-neon transition-colors">Operations</a></li>
-                        <li><a href="rules.html" class="text-gray-400 hover:text-neon transition-colors">Rules</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-neon mb-4">Resources</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="applications.html" class="text-gray-400 hover:text-neon transition-colors">Applications</a></li>
-                        <li><a href="staff.html" class="text-gray-400 hover:text-neon transition-colors">Staff Team</a></li>
-                        <li><a href="support.html" class="text-gray-400 hover:text-neon transition-colors">Support</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-neon mb-4">Connect</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-neon transition-colors">
-                            <i data-lucide="twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-neon transition-colors">
-                            <i data-lucide="youtube"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-neon transition-colors">
-                            <i data-lucide="linkedin"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-                <p>&copy; 2026 UKFR - United Kingdom First Response. All rights reserved.</p>
-                <p class="mt-2 md:mt-0">Tactical Operations Command</p>
-            </div>
-        </div>
-    </footer>
+  <!-- APPLICATIONS -->
+  <section id="applications" class="page">
+    <div class="page-hero reveal">
+      <div class="page-hero-title">Applications</div>
+      <div class="page-hero-sub">
+        Choose the path that best fits your skills and interests. Each application type has its own expectations.
+      </div>
+      <div class="badge-row">
+        <span class="badge gold">Open</span>
+        <span class="badge blue">Reviewed Manually</span>
+      </div>
+    </div>
 
-    <script>
-        lucide.createIcons();
-        
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-    </script>
+    <h2 class="section-title reveal">Application Paths</h2>
+    <div class="app-grid">
+      <div class="app-card reveal">
+        <h3>Operational Member</h3>
+        <p>Join frontline operations as a dispatcher, unit operator, or tactical support.</p>
+        <button class="btn btn-primary">Apply — Operations</button>
+      </div>
+      <div class="app-card reveal">
+        <h3>Training Team</h3>
+        <p>Assist in designing and delivering training modules for new and existing members.</p>
+        <button class="btn btn-ghost">Apply — Training</button>
+      </div>
+      <div class="app-card reveal">
+        <h3>Staff / Leadership</h3>
+        <p>Support the long-term stability and growth of UKFR through leadership roles.</p>
+        <button class="btn btn-ghost">Apply — Staff</button>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal">How Applications Work</h2>
+    <div class="card reveal">
+      <p>
+        Applications are reviewed by the staff team. Ensure your responses are detailed, honest, and reflect the level
+        of professionalism expected within UKFR. If accepted, you will be contacted with further instructions.
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <h4>Quick Links</h4>
+      <div class="footer-link" data-page="home">Home</div>
+      <div class="footer-link" data-page="operations">Operations</div>
+      <div class="footer-link" data-page="rules">Rules</div>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <div class="footer-link" data-page="applications">Applications</div>
+      <div class="footer-link" data-page="staff">Staff Team</div>
+      <div class="footer-link" data-page="support">Support</div>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <div class="footer-link">Discord</div>
+      <div class="footer-link">Twitter</div>
+      <div class="footer-link">YouTube</div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 UKFR – United Kingdom First Response. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+const pages = document.querySelectorAll('.page');
+const navLinks = document.querySelectorAll('.nav-link');
+const pageTriggers = document.querySelectorAll('[data-page]');
+const reveals = document.querySelectorAll('.reveal');
+
+function showPage(id) {
+  pages.forEach(p => {
+    if (p.id === id) {
+      p.classList.add('active');
+    } else {
+      p.classList.remove('active');
+    }
+  });
+
+  navLinks.forEach(link => {
+    if (link.getAttribute('data-page') === id) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  revealOnScroll();
+}
+
+pageTriggers.forEach(el => {
+  el.addEventListener('click', () => {
+    const target = el.getAttribute('data-page');
+    if (target) showPage(target);
+  });
+});
+
+function revealOnScroll() {
+  const trigger = window.innerHeight * 0.85;
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < trigger) el.classList.add('visible');
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+
+/* Background music toggle */
+const bgm = document.getElementById("bgm");
+const toggle = document.getElementById("musicToggle");
+let musicOn = false;
+
+toggle.addEventListener("click", () => {
+  if (!musicOn) {
+    bgm.volume = 0;
+    bgm.play();
+    let v = 0;
+    const fade = setInterval(() => {
+      v += 0.02;
+      bgm.volume = v;
+      if (v >= 0.5) clearInterval(fade);
+    }, 80);
+    toggle.textContent = "MUSIC: ON";
+    musicOn = true;
+  } else {
+    bgm.pause();
+    toggle.textContent = "MUSIC: OFF";
+    musicOn = false;
+  }
+});
+</script>
+
 </body>
 </html>
