@@ -27,6 +27,29 @@
   box-sizing: border-box;
 }
 
+  .form-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(126,150,200,0.35);
+  background: rgba(10,12,18,0.7);
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--blue-main);
+  box-shadow: 0 0 10px rgba(30,79,255,0.4);
+}
+label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+  
 body {
   margin: 0;
   background: radial-gradient(circle at top, #151b2e 0, #05070c 55%);
@@ -613,7 +636,7 @@ footer h4 {
 <body>
 
 <!-- Background music -->
-<audio id="bgm" src="https://jackdavm21-netizen.github.io/music/YTDowncom_YouTube_Inspiring-Cinematic-Background-Music-For_Media_-It5L-gC6nA_001_1080p.mp3" loop></audio>
+<audio id="bgm" src="https://www.youtube.com/watch?v=DUWRbl3eVi0&list=PLNXlpU66dl9nuCWjvYEEfIyZvGb79kEwj&index=2" loop></audio>
 <div id="musicToggle">MUSIC: OFF</div>
 
 <header>
@@ -912,7 +935,7 @@ footer h4 {
     <h2 class="section-title reveal">Command & Staff</h2>
     <div class="staff-grid">
       <div class="staff-card reveal">
-        <div class="staff-name">Command Lead</div>
+        <div class="staff-name">C</div>
         <div class="staff-role">Operations Command</div>
         <div class="staff-meta">
           Oversees strategic direction, high-level operations, and final decision-making.
@@ -938,45 +961,52 @@ footer h4 {
   </section>
 
   <!-- APPLICATIONS -->
-  <section id="applications" class="page">
-    <div class="page-hero reveal">
-      <div class="page-hero-title">Applications</div>
-      <div class="page-hero-sub">
-        Choose the path that best fits your skills and interests. Each application type has its own expectations.
-      </div>
-      <div class="badge-row">
-        <span class="badge gold">Open</span>
-        <span class="badge blue">Reviewed Manually</span>
-      </div>
+<section id="applications" class="page">
+  <div class="page-hero reveal">
+    <div class="page-hero-title">Staff Application</div>
+    <div class="page-hero-sub">
+      Complete the form below. When finished, a copy button will appear so you can paste your application into Discord.
     </div>
+    <div class="badge-row">
+      <span class="badge gold">Open</span>
+      <span class="badge blue">Reviewed Manually</span>
+    </div>
+  </div>
 
-    <h2 class="section-title reveal">Application Paths</h2>
-    <div class="app-grid">
-      <div class="app-card reveal">
-        <h3>Operational Member</h3>
-        <p>Join frontline operations as a dispatcher, unit operator, or tactical support.</p>
-        <button class="btn btn-primary">Apply — Operations</button>
-      </div>
-      <div class="app-card reveal">
-        <h3>Training Team</h3>
-        <p>Assist in designing and delivering training modules for new and existing members.</p>
-        <button class="btn btn-ghost">Apply — Training</button>
-      </div>
-      <div class="app-card reveal">
-        <h3>Staff / Leadership</h3>
-        <p>Support the long-term stability and growth of UKFR through leadership roles.</p>
-        <button class="btn btn-ghost">Apply — Staff</button>
-      </div>
-    </div>
+  <div class="card reveal">
+    <form id="staffAppForm">
 
-    <h2 class="section-title reveal">How Applications Work</h2>
-    <div class="card reveal">
-      <p>
-        Applications are reviewed by the staff team. Ensure your responses are detailed, honest, and reflect the level
-        of professionalism expected within UKFR. If accepted, you will be contacted with further instructions.
-      </p>
-    </div>
-  </section>
+      <label>👤 Full Name</label>
+      <input type="text" class="form-input" name="fullname" required>
+
+      <label>🎂 Age</label>
+      <input type="text" class="form-input" name="age" required>
+
+      <label>💬 Discord Username</label>
+      <input type="text" class="form-input" name="discord" required>
+
+      <label>📝 Why do you want to join the staff team?</label>
+      <textarea class="form-input" name="why" rows="4" required></textarea>
+
+      <label>🎖️ Previous Experience</label>
+      <textarea class="form-input" name="experience" rows="4" required></textarea>
+
+      <label>📊 Activity Level (hours per week)</label>
+      <textarea class="form-input" name="activity" rows="3" required></textarea>
+
+      <label>🧠 Additional Notes (optional)</label>
+      <textarea class="form-input" name="notes" rows="3"></textarea>
+
+      <button type="submit" class="btn btn-primary" style="margin-top:1rem;">Submit Application</button>
+    </form>
+
+    <button id="copyApp" class="btn btn-ghost" style="margin-top:1rem; display:none;">
+      Copy Application
+    </button>
+  </div>
+</section>
+
+
 
 </div>
 
@@ -1075,6 +1105,69 @@ toggle.addEventListener("click", () => {
   }
 });
 </script>
+  
+<script>
+const staffForm = document.getElementById("staffAppForm");
+const copyBtn = document.getElementById("copyApp");
+let formattedApplication = "";
+
+staffForm.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const data = new FormData(staffForm);
+
+  formattedApplication =
+`========================================
+           UKFR STAFF APPLICATION
+========================================
+
+👤 Full Name:
+${data.get("fullname")}
+
+🎂 Age:
+${data.get("age")}
+
+💬 Discord Username:
+${data.get("discord")}
+
+📝 Why do you want to join the staff team?
+${data.get("why")}
+
+🎖️ Previous Experience:
+${data.get("experience")}
+
+📊 Activity Level (hours per week):
+${data.get("activity")}
+
+🧠 Additional Notes (optional):
+${data.get("notes")}
+
+========================================
+      UKFR — Step Into the Blue Line
+========================================`;
+
+  copyBtn.style.display = "inline-block";
+  copyBtn.textContent = "Copy Application";
+});
+
+copyBtn.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(formattedApplication);
+    copyBtn.textContent = "Copied!";
+  } catch (err) {
+    const temp = document.createElement("textarea");
+    temp.value = formattedApplication;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+    copyBtn.textContent = "Copied!";
+  }
+});
+</script>
+
+
+
 
 </body>
 </html>
