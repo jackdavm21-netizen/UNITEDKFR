@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UKFR - United Kingdom First Response</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            font-family: 'DM Sans', sans-serif;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Fraunces', serif;
+        }
+        body {
+            background: radial-gradient(ellipse at top, #1a1a2e 0%, #0f0f1e 50%, #000000 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(15, 15, 30, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(123, 141, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(123, 141, 255, 0.1);
+        }
+        .neon-border {
+            border: 2px solid rgba(123, 141, 255, 0.5);
+            box-shadow: 0 0 20px rgba(123, 141, 255, 0.3), inset 0 0 20px rgba(123, 141, 255, 0.1);
+        }
+        .text-neon {
+            color: #7b8dff;
+            text-shadow: 0 0 10px rgba(123, 141, 255, 0.5);
+        }
+        .text-neon-purple {
+            color: #9f6bff;
+            text-shadow: 0 0 10px rgba(159, 107, 255, 0.5);
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #7b8dff;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #7b8dff, #9f6bff);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .hero-text {
+            background: linear-gradient(135deg, #7b8dff 0%, #9f6bff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="text-gray-100">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-card">                                                                                                    
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="shield-check" class="text-neon" stroke-width="2.5"></i>
+                    <span class="text-xl font-bold hero-text">UKFR</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-neon font-medium">Home</a>
+                    <a href="operations.html" class="nav-link text-gray-300 hover:text-neon">Operations</a>
+                    <a href="rules.html" class="nav-link text-gray-300 hover:text-neon">Rules</a>
+                    <a href="applications.html" class="nav-link text-gray-300 hover:text-neon">Applications</a>
+                    <a href="staff.html" class="nav-link text-gray-300 hover:text-neon">Staff</a>
+                    <a href="support.html" class="nav-link text-gray-300 hover:text-neon">Support</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card mt-2 mx-4 rounded-lg">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="text-neon font-medium py-2">Home</a>
+                <a href="operations.html" class="text-gray-300 hover:text-neon py-2">Operations</a>
+                <a href="rules.html" class="text-gray-300 hover:text-neon py-2">Rules</a>
+                <a href="applications.html" class="text-gray-300 hover:text-neon py-2">Applications</a>
+                <a href="staff.html" class="text-gray-300 hover:text-neon py-2">Staff</a>
+                <a href="support.html" class="text-gray-300 hover:text-neon py-2">Support</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center space-y-6">
+            <div class="inline-block glass-card px-4 py-2 rounded-full mb-4">
+                <span class="text-neon text-sm font-semibold tracking-wider">TACTICAL RESPONSE UNIT</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold hero-text mb-6">
+                United Kingdom<br>First Response
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                Elite tactical operations and emergency response coordination. Protecting communities through advanced training, strategic deployment, and unwavering dedication.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                <a href="applications.html" class="neon-border px-8 py-3 rounded-lg font-semibold text-neon hover:bg-indigo-900/20 transition-all">
+                    Join Our Forces
+                </a>
+                <a href="operations.html" class="glass-card px-8 py-3 rounded-lg font-semibold text-gray-300 hover:text-neon transition-all">
+                    View Operations
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlight Cards -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="glass-card rounded-xl p-8 hover:neon-border transition-all group">
+                <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="radio" class="text-neon" size="28"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-neon-purple mb-3">24/7 Dispatch</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    Round-the-clock emergency response coordination with real-time tactical deployment and incident management systems.
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="glass-card rounded-xl p-8 hover:neon-border transition-all group">
+                <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="users" class="text-neon" size="28"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-neon-purple mb-3">Elite Training</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    Comprehensive training programs designed to prepare operatives for high-stakes scenarios and emergency situations.
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass-card rounded-xl p-8 hover:neon-border transition-all group">
+                <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="map-pin" class="text-neon" size="28"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-neon-purple mb-3">Strategic Zones</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    Coordinated multi-sector response coverage across all United Kingdom regions with rapid deployment capabilities.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="glass-card rounded-xl p-12 neon-border">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="space-y-2">
+                    <div class="text-4xl font-bold text-neon">0 :[</div>
+                    <div class="text-gray-400 uppercase tracking-wide text-sm">Active Members</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-4xl font-bold text-neon-purple">10K+</div>
+                    <div class="text-gray-400 uppercase tracking-wide text-sm">Incidents Resolved</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-4xl font-bold text-neon">24/7</div>
+                    <div class="text-gray-400 uppercase tracking-wide text-sm">Active Server</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-4xl font-bold text-neon-purple">2</div>
+                    <div class="text-gray-400 uppercase tracking-wide text-sm">Staff [Hiring]</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-card mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="shield-check" class="text-neon"></i>
+                        <span class="text-lg font-bold hero-text">UKFR</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        UKFR — Step Into the Blue Line.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-neon mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-neon transition-colors">Home</a></li>
+                        <li><a href="operations.html" class="text-gray-400 hover:text-neon transition-colors">Operations</a></li>
+                        <li><a href="rules.html" class="text-gray-400 hover:text-neon transition-colors">Rules</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-neon mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="applications.html" class="text-gray-400 hover:text-neon transition-colors">Applications</a></li>
+                        <li><a href="staff.html" class="text-gray-400 hover:text-neon transition-colors">Staff Team</a></li>
+                        <li><a href="support.html" class="text-gray-400 hover:text-neon transition-colors">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-neon mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-neon transition-colors">
+                            <i data-lucide="twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-neon transition-colors">
+                            <i data-lucide="youtube"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-neon transition-colors">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                <p>&copy; 2026 UKFR - United Kingdom First Response. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Tactical Operations Command</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
